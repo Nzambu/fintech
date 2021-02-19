@@ -1,0 +1,17 @@
+{
+    "error": {
+        "title": "Not found",
+        "code": "NFH001",        
+        "status": 404,
+        "links": null,
+        "type": null,
+        "source": null,
+        "detail": "Item not found",
+        "meta": {
+            "copyright": "FinTech Sample.",
+            "authors": [
+                "Patrick Nzambu"
+            ]
+        }
+    }
+}

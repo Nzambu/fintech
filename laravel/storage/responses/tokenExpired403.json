@@ -1,0 +1,17 @@
+{
+    "error": {        
+        "title": "Token Expired",
+        "code": "TEE001",
+        "status": 401,
+        "links": null,
+        "type": null,
+        "source": null,
+        "detail": "The token has expired",
+        "meta": {
+            "copyright": "FinTech Sample.",
+            "authors": [
+                "Patrick Nzambu"
+            ]
+        }
+    }
+}

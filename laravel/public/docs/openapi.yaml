@@ -1,0 +1,1599 @@
+openapi: 3.0.3
+info:
+    title: Laravel
+    description: ''
+    version: 1.0.0
+servers:
+    -
+        url: 'http://localhost'
+paths:
+    /api/login:
+        post:
+            summary: Login
+            description: 'Gain access to the application'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: authorization
+                                    id: token
+                                    attributes: { access_token: null, token_type: null, expires_in: null }
+                                    links: { self: 'http://localhost/api/login' }
+                                properties:
+                                    type: { type: string, example: authorization }
+                                    id: { type: string, example: token }
+                                    attributes: { type: object, example: { access_token: null, token_type: null, expires_in: null } }
+                                    links: { type: object, example: { self: 'http://localhost/api/login' } }
+            tags:
+                - Authentication
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'The registered user email.'
+                                    example: libero
+                                password:
+                                    type: string
+                                    description: 'The user secret code.'
+                                    example: praesentium
+                            required:
+                                - email
+                                - password
+            security: []
+    /api/forgot_password:
+        post:
+            summary: 'Forgot password'
+            description: 'Send user an email with a link to change password in the event user forgot password or needs to change password'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: authorization
+                                    id: forgot_password
+                                    attributes: { message: 'Please check your email to get the change password link' }
+                                    links: { self: 'http://localhost/api/forgot_password' }
+                                properties:
+                                    type: { type: string, example: authorization }
+                                    id: { type: string, example: forgot_password }
+                                    attributes: { type: object, example: { message: 'Please check your email to get the change password link' } }
+                                    links: { type: object, example: { self: 'http://localhost/api/forgot_password' } }
+            tags:
+                - Authentication
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'The registered user email The value must be a valid email address.'
+                                    example: tommie.davis@example.com
+                            required:
+                                - email
+            security: []
+    /api/refresh:
+        get:
+            summary: 'Refresh token'
+            description: 'Refresh the bearer token when user is logged in and token is about to expire'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: authorization
+                                    id: token
+                                    attributes: { access_token: null, token_type: null, expires_in: null }
+                                    links: { self: 'http://localhost/api/refresh' }
+                                properties:
+                                    type: { type: string, example: authorization }
+                                    id: { type: string, example: token }
+                                    attributes: { type: object, example: { access_token: null, token_type: null, expires_in: null } }
+                                    links: { type: object, example: { self: 'http://localhost/api/refresh' } }
+            tags:
+                - Authentication
+            security: []
+    /api/logout:
+        get:
+            summary: 'Log out'
+            description: 'Voluntatirly end access to the application'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: authorization
+                                    id: logout
+                                    attributes: { message: 'Successfully logged out' }
+                                    links: { self: 'http://localhost/api/logout' }
+                                properties:
+                                    type: { type: string, example: authorization }
+                                    id: { type: string, example: logout }
+                                    attributes: { type: object, example: { message: 'Successfully logged out' } }
+                                    links: { type: object, example: { self: 'http://localhost/api/logout' } }
+            tags:
+                - Authentication
+            security: []
+    /api/currency:
+        get:
+            summary: Currency
+            description: "This resource will return a collection of the available currencies.\nGet the id from the selected resource and use it as currency_id when creating customer.\nEach customer is assumed to transact(send) money using his/her selected curreny.\nHowever, one can receive money in other currencies part from his/her selected curreny.\nIn transactions, use currency from the sender while displaying the record"
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: currency, id: '17', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:44:53.000000Z', updated_at: '2021-02-19T14:44:53.000000Z' } }
+                                    - { type: currency, id: '18', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:44:53.000000Z', updated_at: '2021-02-19T14:44:53.000000Z' } }
+            tags:
+                - Currency
+            security: []
+    /api/customer:
+        get:
+            summary: Customers
+            description: 'This resource will return a collection of the customers.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: customer, id: '5', attributes: { created_at: null, updated_at: null, amount_paid: '4700' }, relationships: { user: [{ type: user, id: '5', attributes: { name: 'Delpha Mohr', firstName: Delpha, lastName: Mohr, id_number: '37893800' }, relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.798816, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.799342, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '8', attributes: { phone: '72769383', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.799556, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '1', attributes: { group: Individual } }] }, links: { self: 'http://localhost/api/customer/5' } }
+                                    - { type: customer, id: '2', attributes: { created_at: null, updated_at: null, amount_paid: '5017' }, relationships: { user: [{ type: user, id: '2', attributes: { name: 'Myrtle Kerluke', firstName: Myrtle, lastName: Kerluke, id_number: '37567391' }, relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [{ type: phone, id: '3', attributes: { phone: '712790410', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.807754, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [{ type: email, id: '2', attributes: { email: aymz32egr3@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.80812, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '2', attributes: { email: aymz32egr3@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.808457, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '3', attributes: { email: qe5qejp1bf@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.808578, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '7', attributes: { email: kp3u9nydva@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.808688, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '8', attributes: { email: avjf9ly7pr@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.808795, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[{ type: phone, id: '3', attributes: { phone: '712790410', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.809366, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/2' } }
+            tags:
+                - Customer
+            security: []
+    '/api/customer/{customer}':
+        get:
+            summary: 'Get customer'
+            description: "Select a customer using the id. If the customer exists, the response containes customer data.\nOtherwise, return a not found error response."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: customer, id: '8', attributes: { created_at: null, updated_at: null, amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.855424, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.855591, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.855643, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/ut' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/8' } }
+                                    - { type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.85832, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.858474, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.858527, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/ut' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }
+            tags:
+                - Customer
+            security: []
+        put:
+            summary: 'Update customer'
+            description: "Update an existing customer. Pick the data based on selected fields stored in the database. Select the status id from customer status, group id from customer group and currency id from a resource in currency collection.\nThe currency wille be referenced when the user transacts. That is, the currency show for each transaction."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.910723, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.910861, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.910905, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/doloribus' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }
+                                    - { type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.912906, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.91303, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.913074, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/doloribus' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }
+            tags:
+                - Customer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                first_name:
+                                    type: string
+                                    description: 'The baptismal or first name of the customer.'
+                                    example: error
+                                last_name:
+                                    type: string
+                                    description: 'The family name of the customer.'
+                                    example: explicabo
+                                id_number:
+                                    type: integer
+                                    description: 'A unique identification number from a government issued identification number.'
+                                    example: 2
+                                system_user:
+                                    type: boolean
+                                    description: 'A user can log in or not based on this flag which is false by default.'
+                                    example: false
+                                gender_id:
+                                    type: integer
+                                    description: 'The gender id selected from gender resource.'
+                                    example: 18
+                                phone:
+                                    type: integer
+                                    description: ''
+                                    example: 6
+                                email:
+                                    type: string
+                                    description: ''
+                                    example: delectus
+                                status_id:
+                                    type: integer
+                                    description: 'The status id of the customer selected from customer status resource.'
+                                    example: 20
+                                group_id:
+                                    type: integer
+                                    description: 'The group id of the customer selected from customer group resource.'
+                                    example: 14
+                            required:
+                                - first_name
+                                - last_name
+                                - id_number
+                                - gender_id
+                                - phone
+                                - status_id
+                                - group_id
+            security: []
+        delete:
+            summary: 'Delete customer'
+            description: 'Provide the id of the customer in the case of deleting the customer. No recovery of data once deleted.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.943709, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.943887, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.943944, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/atque' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }
+                                    - { type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.945587, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.945696, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 31, f: 0.945733, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/customer/atque' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }
+            tags:
+                - Customer
+            security: []
+        parameters:
+            -
+                in: path
+                name: customer
+                description: 'The id of the customer'
+                example: ut
+                required: true
+                schema:
+                    type: string
+    /api/customer_status:
+        get:
+            summary: Status
+            description: "A customer can exist in different states at different times depending on their activities in the application.\nThis resource will return a collection of the possible states."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: status, id: '', attributes: { status: null } }
+                                    - { type: status, id: '', attributes: { status: null } }
+            tags:
+                - Customer
+            security: []
+    /api/customer_groups:
+        get:
+            summary: Groups
+            description: 'This resource will return a collection of the different groups of customers.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: group, id: '', attributes: { group: null } }
+                                    - { type: group, id: '', attributes: { group: null } }
+            tags:
+                - Customer
+            security: []
+    /api/transaction:
+        get:
+            summary: Transactions
+            description: 'This resource will return a collection of the transactions.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: transaction, id: '50', attributes: { amount: 8983, ref_no: ref/s//r//, order_no: on/66C, created_at: '2021-02-19T14:44:53.000000Z', updated_at: '2021-02-19T14:44:53.000000Z' }, relationships: { sender: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.000462, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.000974, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.001078, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], beneficiary: [{ type: customer, id: '7', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '17724' }, relationships: { user: [{ type: user, id: '7', attributes: { name: 'Alize Lind', firstName: Alize, lastName: Lind, id_number: '34269570' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.008401, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.008608, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/7' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '2', attributes: { status: Success } }] }, links: { self: 'http://localhost/api/transaction/50' } }
+                                    - { type: transaction, id: '51', attributes: { amount: 6935, ref_no: ref/s//r//, order_no: on/eng, created_at: '2021-02-19T14:44:53.000000Z', updated_at: '2021-02-19T14:44:53.000000Z' }, relationships: { sender: [{ type: customer, id: '6', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '9527' }, relationships: { user: [{ type: user, id: '6', attributes: { name: 'Jarrod West', firstName: Jarrod, lastName: West, id_number: '32014865' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.013031, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.013171, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '6', attributes: { email: moys9vtkws@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.013223, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/6' } }], beneficiary: [{ type: customer, id: '7', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '17724' }, relationships: { user: [{ type: user, id: '7', attributes: { name: 'Alize Lind', firstName: Alize, lastName: Lind, id_number: '34269570' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.016943, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.017062, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/7' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '2', attributes: { status: Success } }] }, links: { self: 'http://localhost/api/transaction/51' } }
+            tags:
+                - Transaction
+            security: []
+        post:
+            summary: 'Create transaction'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: transaction, id: '52', attributes: { amount: 7667, ref_no: ref/s//r//, order_no: on/6VM, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' }, relationships: { sender: [{ type: customer, id: '7', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '1806' }, relationships: { user: [{ type: user, id: '7', attributes: { name: 'Alize Lind', firstName: Alize, lastName: Lind, id_number: '34269570' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.080921, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '5', attributes: { email: 9nsq1zygi1@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.081467, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/7' } }], beneficiary: [{ type: customer, id: '6', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '17194' }, relationships: { user: [{ type: user, id: '6', attributes: { name: 'Jarrod West', firstName: Jarrod, lastName: West, id_number: '32014865' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.09775, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.098107, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '6', attributes: { email: moys9vtkws@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.098237, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/6' } }], type: [{ type: type, id: '1', attributes: { type: Voucher } }], method: [{ type: method, id: '1', attributes: { method: 'Debit Card' } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] }, links: { self: 'http://localhost/api/transaction/52' } }
+                                    - { type: transaction, id: '53', attributes: { amount: 3327, ref_no: ref/s//r//, order_no: on/nLB, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' }, relationships: { sender: [{ type: customer, id: '6', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '17194' }, relationships: { user: [{ type: user, id: '6', attributes: { name: 'Jarrod West', firstName: Jarrod, lastName: West, id_number: '32014865' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [null], primary_email: [{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.108582, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], email: [[{ type: email, id: '4', attributes: { email: ir09lzigla@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.108833, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: email, id: '6', attributes: { email: moys9vtkws@fintech.com, primary: 1, verified: 1, created: '2021-02-19T14:37:21.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 33, f: 0.10893, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], phone: [[]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/6' } }], beneficiary: [{ type: customer, id: '5', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '8027' }, relationships: { user: [{ type: user, id: '5', attributes: { name: 'Delpha Mohr', firstName: Delpha, lastName: Mohr, id_number: '37893800' }, relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.118055, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.118336, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '8', attributes: { phone: '72769383', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.118432, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/5' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '1', attributes: { method: 'Debit Card' } }], status: [{ type: status, id: '2', attributes: { status: Success } }] }, links: { self: 'http://localhost/api/transaction/53' } }
+            tags:
+                - Transaction
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                type_id:
+                                    type: integer
+                                    description: 'The transaction type id is extracted from a resource in the transactions types collection. Check types under transaction.'
+                                    example: 1
+                                method_id:
+                                    type: integer
+                                    description: 'The transaction method id is extracted from a resource in the transactions methods collection. Check methods under transaction.'
+                                    example: 12
+                                status_id:
+                                    type: integer
+                                    description: 'The status of the transaction which is pending by default. Get the value from a resource selected from the transactions status.'
+                                    example: 7
+                                sender:
+                                    type: integer
+                                    description: 'The id of the customer who is making a payment/sending the money. Get the value from customer selected from customer collection.'
+                                    example: 8
+                                beneficiary:
+                                    type: integer
+                                    description: 'The id of the customer who will receive the money send in the transaction. Get the value from customer selected from customer collection.'
+                                    example: 12
+                                amount:
+                                    type: integer
+                                    description: 'The amount involved in the transaction.'
+                                    example: 6
+                                order_no:
+                                    type: string
+                                    description: 'Assumes the value is from an existing order, user types the order reference.'
+                                    example: mollitia
+                            required:
+                                - type_id
+                                - method_id
+                                - sender
+                                - beneficiary
+                                - amount
+                                - order_no
+            security: []
+    '/api/transaction/{transaction}':
+        get:
+            summary: 'Get transaction'
+            description: "Select a transaction using the id. If the transaction exists, the response containes transaction data.\nOtherwise, return a not found error response."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: transaction
+                                    id: '54'
+                                    attributes: { amount: 4302, ref_no: ref/s//r//, order_no: on/sxD, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' }
+                                    relationships: { sender: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.190646, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.191429, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.191656, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/vero' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], beneficiary: [{ type: customer, id: '3', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '4302' }, relationships: { user: [{ type: user, id: '3', attributes: { name: 'Santiago Glover', firstName: Santiago, lastName: Glover, id_number: '37373114' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.212191, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.212634, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/vero' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/3' } }], type: [{ type: type, id: '1', attributes: { type: Voucher } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] }
+                                    links: { self: 'http://localhost/api/transaction/54' }
+                                properties:
+                                    type: { type: string, example: transaction }
+                                    id: { type: string, example: '54' }
+                                    attributes: { type: object, example: { amount: 4302, ref_no: ref/s//r//, order_no: on/sxD, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' } }
+                                    relationships: { type: object, example: { sender: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '16848' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.190646, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.191429, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.191656, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/vero' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], beneficiary: [{ type: customer, id: '3', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '4302' }, relationships: { user: [{ type: user, id: '3', attributes: { name: 'Santiago Glover', firstName: Santiago, lastName: Glover, id_number: '37373114' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.212191, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.212634, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/vero' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/3' } }], type: [{ type: type, id: '1', attributes: { type: Voucher } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] } }
+                                    links: { type: object, example: { self: 'http://localhost/api/transaction/54' } }
+            tags:
+                - Transaction
+            security: []
+        put:
+            summary: 'Update transaction'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: transaction
+                                    id: '55'
+                                    attributes: { amount: 8374, ref_no: ref/s//r//, order_no: on/KFc, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' }
+                                    relationships: { sender: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '25222' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263198, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263763, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263982, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/labore' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], beneficiary: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '25222' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.277406, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.27778, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.27791, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/labore' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '1', attributes: { method: 'Debit Card' } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] }
+                                    links: { self: 'http://localhost/api/transaction/55' }
+                                properties:
+                                    type: { type: string, example: transaction }
+                                    id: { type: string, example: '55' }
+                                    attributes: { type: object, example: { amount: 8374, ref_no: ref/s//r//, order_no: on/KFc, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' } }
+                                    relationships: { type: object, example: { sender: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '25222' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263198, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263763, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.263982, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/labore' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], beneficiary: [{ type: customer, id: '8', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '25222' }, relationships: { user: [{ type: user, id: '8', attributes: { name: 'Rosa Jenkins', firstName: Rosa, lastName: Jenkins, id_number: '35549256' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.277406, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '5', attributes: { phone: '716233638', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.27778, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '7', attributes: { phone: '79816446', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.27791, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/labore' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/8' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '1', attributes: { method: 'Debit Card' } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] } }
+                                    links: { type: object, example: { self: 'http://localhost/api/transaction/55' } }
+            tags:
+                - Transaction
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                type_id:
+                                    type: integer
+                                    description: 'The transaction type id is extracted from a resource in the transactions types collection. Check types under transaction.'
+                                    example: 7
+                                method_id:
+                                    type: integer
+                                    description: 'The transaction method id is extracted from a resource in the transactions methods collection. Check methods under transaction.'
+                                    example: 9
+                                status_id:
+                                    type: integer
+                                    description: 'The status of the transaction which is pending by default. Get the value from a resource selected from the transactions status.'
+                                    example: 6
+                                sender:
+                                    type: integer
+                                    description: 'The id of the customer who is making a payment/sending the money. Get the value from customer selected from customer collection.'
+                                    example: 13
+                                beneficiary:
+                                    type: integer
+                                    description: 'The id of the customer who will receive the money send in the transaction. Get the value from customer selected from customer collection.'
+                                    example: 2
+                                amount:
+                                    type: integer
+                                    description: 'The amount involved in the transaction.'
+                                    example: 6
+                                order_no:
+                                    type: string
+                                    description: 'Assumes the value is from an existing order, user types the order reference.'
+                                    example: vero
+                            required:
+                                - type_id
+                                - method_id
+                                - sender
+                                - beneficiary
+                                - amount
+                                - order_no
+            security: []
+        delete:
+            summary: 'Delete transaction'
+            description: 'Provide the id of the transaction in the case of deleting the transaction. No recovery of deleted data. The action is permanent.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: transaction
+                                    id: '56'
+                                    attributes: { amount: 2961, ref_no: ref/s//r//, order_no: on/aGb, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' }
+                                    relationships: { sender: [{ type: customer, id: '3', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: 0 }, relationships: { user: [{ type: user, id: '3', attributes: { name: 'Santiago Glover', firstName: Santiago, lastName: Glover, id_number: '37373114' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.331459, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.331914, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/exercitationem' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/3' } }], beneficiary: [{ type: customer, id: '5', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '7661' }, relationships: { user: [{ type: user, id: '5', attributes: { name: 'Delpha Mohr', firstName: Delpha, lastName: Mohr, id_number: '37893800' }, relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.343179, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.343438, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '8', attributes: { phone: '72769383', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.34354, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/exercitationem' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/5' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] }
+                                    links: { self: 'http://localhost/api/transaction/56' }
+                                properties:
+                                    type: { type: string, example: transaction }
+                                    id: { type: string, example: '56' }
+                                    attributes: { type: object, example: { amount: 2961, ref_no: ref/s//r//, order_no: on/aGb, created_at: '2021-02-19T14:44:54.000000Z', updated_at: '2021-02-19T14:44:54.000000Z' } }
+                                    relationships: { type: object, example: { sender: [{ type: customer, id: '3', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: 0 }, relationships: { user: [{ type: user, id: '3', attributes: { name: 'Santiago Glover', firstName: Santiago, lastName: Glover, id_number: '37373114' }, relationships: { gender: [{ type: gender, id: '2', attributes: { sex: Male } }], primary_phone: [{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.331459, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '6', attributes: { phone: '710082777', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.331914, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/exercitationem' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '3', attributes: { group: Corporate } }] }, links: { self: 'http://localhost/api/customer/3' } }], beneficiary: [{ type: customer, id: '5', attributes: { created_at: '2021-02-19T14:37:21.000000Z', updated_at: '2021-02-19T14:37:21.000000Z', amount_paid: '7661' }, relationships: { user: [{ type: user, id: '5', attributes: { name: 'Delpha Mohr', firstName: Delpha, lastName: Mohr, id_number: '37893800' }, relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.343179, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }], primary_email: [null], email: [[]], phone: [[{ type: phone, id: '4', attributes: { phone: '721884517', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.343438, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }, { type: phone, id: '8', attributes: { phone: '72769383', primary: 1, verified: 1, created: '2021-02-19T14:37:22.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 7, s: 32, f: 0.34354, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }]], password: [null] }, links: { self: 'http://localhost/api/transaction/exercitationem' } }], status: [{ type: status, id: '1', attributes: { status: Active } }], currency: [{ type: currency, id: '1', attributes: { currency: Shilling, slug: KSHS, sign: /=, created_at: '2021-02-19T14:37:20.000000Z', updated_at: '2021-02-19T14:37:20.000000Z' } }], group: [{ type: group, id: '2', attributes: { group: SME } }] }, links: { self: 'http://localhost/api/customer/5' } }], type: [{ type: type, id: '2', attributes: { type: Loyalty } }], method: [{ type: method, id: '2', attributes: { method: Cash } }], status: [{ type: status, id: '1', attributes: { status: Pending } }] } }
+                                    links: { type: object, example: { self: 'http://localhost/api/transaction/56' } }
+            tags:
+                - Transaction
+            security: []
+        parameters:
+            -
+                in: path
+                name: transaction
+                description: 'The id of the transaction'
+                example: vero
+                required: true
+                schema:
+                    type: string
+    /api/transaction_status:
+        get:
+            summary: Status
+            description: "A transaction can be a success, pending or failed. This resource returns the data for each state/status.\nBy default each transaction has a pending status as it waiting to be processed. The admin will change state to success or failed."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: status, id: '', attributes: { status: null } }
+                                    - { type: status, id: '', attributes: { status: null } }
+            tags:
+                - Transaction
+            security: []
+    /api/transaction_type:
+        get:
+            summary: Types
+            description: "A transaction can be classified into different types. The type is declared when creating the transaction.\nIt is advisable to pick this field using radio buttons on the transaction form to pick the appropriate type.\nThis resource gives the data for each type. Use the resource id as the type_id creating a transaction."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: type, id: '', attributes: { type: null } }
+                                    - { type: type, id: '', attributes: { type: null } }
+            tags:
+                - Transaction
+            security: []
+    /api/transaction_method:
+        get:
+            summary: Methods
+            description: "A transaction can use various methods such as debit card, mobile app or cash. Each resource has method data.\nPass the id of resource as method_id when creating a new transaction."
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: method, id: '', attributes: { method: null } }
+                                    - { type: method, id: '', attributes: { method: null } }
+            tags:
+                - Transaction
+            security: []
+    /api/verify_reset_password_token:
+        post:
+            summary: 'Verify Token'
+            description: 'Verify the reset password token'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                token:
+                                    type: string
+                                    description: ''
+                                    example: velit
+                            required:
+                                - token
+            security: []
+    /api/change_password:
+        post:
+            summary: 'Change password'
+            description: 'Select a new user password'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                token:
+                                    type: string
+                                    description: ''
+                                    example: sit
+                            required:
+                                - token
+            security: []
+    /api/profile_change_password:
+        post:
+            summary: 'Account change password'
+            description: ''
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses: {  }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                previous_password:
+                                    type: string
+                                    description: ''
+                                    example: ut
+                            required:
+                                - previous_password
+            security: []
+    /api/profile:
+        get:
+            summary: 'User profile'
+            description: 'Get authenticated user profile'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: user
+                                    id: '49'
+                                    attributes: { name: 'Ludwig Hill', firstName: Ludwig, lastName: Hill, id_number: 36164817 }
+                                    relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [null], primary_email: [null], email: [[]], phone: [[]], password: [null] }
+                                    links: { self: 'http://localhost/api/profile' }
+                                properties:
+                                    type: { type: string, example: user }
+                                    id: { type: string, example: '49' }
+                                    attributes: { type: object, example: { name: 'Ludwig Hill', firstName: Ludwig, lastName: Hill, id_number: 36164817 } }
+                                    relationships: { type: object, example: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [null], primary_email: [null], email: [[]], phone: [[]], password: [null] } }
+                                    links: { type: object, example: { self: 'http://localhost/api/profile' } }
+            tags:
+                - User
+            security: []
+    /api/update_profile:
+        post:
+            summary: 'Update Profile'
+            description: 'User can edit the profile data'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: user
+                                    id: '50'
+                                    attributes: { name: 'Frankie Leffler', firstName: Frankie, lastName: Leffler, id_number: 37476631 }
+                                    relationships: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [null], primary_email: [null], email: [[]], phone: [[]], password: [null] }
+                                    links: { self: 'http://localhost/api/update_profile' }
+                                properties:
+                                    type: { type: string, example: user }
+                                    id: { type: string, example: '50' }
+                                    attributes: { type: object, example: { name: 'Frankie Leffler', firstName: Frankie, lastName: Leffler, id_number: 37476631 } }
+                                    relationships: { type: object, example: { gender: [{ type: gender, id: '1', attributes: { sex: Female } }], primary_phone: [null], primary_email: [null], email: [[]], phone: [[]], password: [null] } }
+                                    links: { type: object, example: { self: 'http://localhost/api/update_profile' } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                first_name:
+                                    type: string
+                                    description: 'The user baptismal or first name.'
+                                    example: asperiores
+                                last_name:
+                                    type: string
+                                    description: 'The user family name.'
+                                    example: autem
+                            required:
+                                - first_name
+                                - last_name
+            security: []
+    /api/switch_primary_email:
+        post:
+            summary: 'Change primary email'
+            description: 'Switch the emailss to make the other email a primary. The current primary email will be set to false.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: email, id: '51', attributes: { email: uo7iv0irzj@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.560361, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+                                    - { type: email, id: '52', attributes: { email: tkzthxvigv@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.560462, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: ''
+                                    example: dolores
+                            required:
+                                - email
+            security: []
+    /api/email:
+        get:
+            summary: 'Email Addresses'
+            description: 'Select user email addresses'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: email, id: '53', attributes: { email: ll7m7huqeh@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.581537, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+                                    - { type: email, id: '54', attributes: { email: bomedlkp5a@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.581614, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            security: []
+        post:
+            summary: 'Add email address'
+            description: 'Create a new user email address'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: email
+                                    id: '55'
+                                    attributes: { email: kgwrcf2rj5@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.597613, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: email }
+                                    id: { type: string, example: '55' }
+                                    attributes: { type: object, example: { email: kgwrcf2rj5@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.597613, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'The user email The value must be a valid email address.'
+                                    example: idare@example.com
+                                primary:
+                                    type: boolean
+                                    description: 'True if the number is primary, else, false.'
+                                    example: false
+                                verified:
+                                    type: boolean
+                                    description: 'True if the number is verified, else, false.'
+                                    example: false
+                            required:
+                                - email
+            security: []
+    '/api/email/{email}':
+        put:
+            summary: 'Edit email address'
+            description: 'Update a user email address'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: email
+                                    id: '56'
+                                    attributes: { email: 19knj8i1kw@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.618197, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: email }
+                                    id: { type: string, example: '56' }
+                                    attributes: { type: object, example: { email: 19knj8i1kw@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.618197, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'The user email The value must be a valid email address.'
+                                    example: name.hoppe@example.com
+                                primary:
+                                    type: boolean
+                                    description: 'True if the number is primary, else, false.'
+                                    example: false
+                                verified:
+                                    type: boolean
+                                    description: 'True if the number is verified, else, false.'
+                                    example: false
+                            required:
+                                - email
+            security: []
+        delete:
+            summary: 'Delete email address'
+            description: 'Remove a user email address'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: email
+                                    id: '57'
+                                    attributes: { email: xgncftggmp@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.631641, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: email }
+                                    id: { type: string, example: '57' }
+                                    attributes: { type: object, example: { email: xgncftggmp@fintech.com, primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.631641, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            security: []
+        parameters:
+            -
+                in: path
+                name: email
+                description: ''
+                example: non
+                required: true
+                schema:
+                    type: string
+    /api/switch_primary_phone:
+        post:
+            summary: 'Change primary phone number'
+            description: 'Switch the numbers to make the other number a primary. The current primary phone number will be set to false.'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: phone, id: '51', attributes: { phone: '76117204', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.673988, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+                                    - { type: phone, id: '52', attributes: { phone: '75276647', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.674047, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                phone:
+                                    type: integer
+                                    description: ''
+                                    example: 5
+                            required:
+                                - phone
+            security: []
+    /api/phone:
+        get:
+            summary: 'Phone Number/s'
+            description: 'Select user phone numbers'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: phone, id: '53', attributes: { phone: '72535999', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.690617, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+                                    - { type: phone, id: '54', attributes: { phone: '711793195', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.69072, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            security: []
+        post:
+            summary: 'Add phone number'
+            description: 'Create a new user phone number'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: phone
+                                    id: '55'
+                                    attributes: { phone: '719015153', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.708388, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: phone }
+                                    id: { type: string, example: '55' }
+                                    attributes: { type: object, example: { phone: '719015153', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.708388, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                phone:
+                                    type: integer
+                                    description: 'The user phone number.'
+                                    example: 20
+                                primary:
+                                    type: boolean
+                                    description: 'True if the number is primary, else, false.'
+                                    example: false
+                                verified:
+                                    type: boolean
+                                    description: 'True if the number is verified, else, false.'
+                                    example: false
+                            required:
+                                - phone
+            security: []
+    '/api/phone/{phone}':
+        put:
+            summary: 'Edit phone number'
+            description: 'Update a user phone number'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: phone
+                                    id: '56'
+                                    attributes: { phone: '714301282', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.724685, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: phone }
+                                    id: { type: string, example: '56' }
+                                    attributes: { type: object, example: { phone: '714301282', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.724685, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                phone:
+                                    type: integer
+                                    description: 'The user phone number.'
+                                    example: 12
+                                primary:
+                                    type: boolean
+                                    description: 'True if the number is primary, else, false.'
+                                    example: false
+                                verified:
+                                    type: boolean
+                                    description: 'True if the number is verified, else, false.'
+                                    example: false
+                            required:
+                                - phone
+            security: []
+        delete:
+            summary: 'Delete phone number'
+            description: 'Remove a user phone number'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    type: phone
+                                    id: '57'
+                                    attributes: { phone: '714317638', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.742094, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } }
+                                properties:
+                                    type: { type: string, example: phone }
+                                    id: { type: string, example: '57' }
+                                    attributes: { type: object, example: { phone: '714317638', primary: true, verified: true, created: '2021-02-19T14:44:53.000000Z', difference: { 'y': 0, m: 0, d: 0, h: 0, i: 0, s: 0, f: 0.742094, weekday: 0, weekday_behavior: 0, first_last_day_of: 0, invert: 0, days: 0, special_type: 0, special_amount: 0, have_weekday_relative: 0, have_special_relative: 0 } } }
+            tags:
+                - User
+            security: []
+        parameters:
+            -
+                in: path
+                name: phone
+                description: ''
+                example: explicabo
+                required: true
+                schema:
+                    type: string
+    /api/gender:
+        get:
+            summary: 'Get gender'
+            description: 'Select all the genders'
+            parameters:
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                example:
+                                    - { type: gender, id: '', attributes: { sex: Female } }
+                                    - { type: gender, id: '', attributes: { sex: Female } }
+            tags:
+                - User
+            security: []
